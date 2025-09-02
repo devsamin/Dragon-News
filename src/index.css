@@ -1,2 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@100..900&display=swap');
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+/* @theme {
+  --font-exo2:'Exo 2', 'sans-serif'
+}
+
+@layer base {
+  body {
+    @apply font-sans; /* default Tailwind sans */
+    /* font-family: 'Exo 2', sans-serif; /* override */
+  /* }
+}  */
+  body {
+  font-family: 'Exo 2', sans-serif;
+}
