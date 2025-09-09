@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Links } from 'react-router-dom';
 import proFileLogo from '../assets/user.png'
 const Navbar = () => {
     return (
@@ -13,7 +13,7 @@ const Navbar = () => {
             </div>
             <div className='login flex gap-2 items-center'>
                 <img src={proFileLogo} alt="" />
-                <button className='btn btn-info'>Login</button>
+                <Link to={'/auth/login'} className='btn btn-info'>Login</Link>
             </div>
         </div>
     );
