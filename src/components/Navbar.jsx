@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
         <div className='flex justify-between'>
             
-            <div className='font-semibold'>{user.name}</div>
+            <div className='font-semibold'>{user && user.name}</div>
             <div className='nav space-x-4 items-center'>
                 <Link to={'/home'}>Home</Link>
                 <Link to={'/career'}>Career</Link>

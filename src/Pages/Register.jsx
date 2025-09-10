@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
+  const {createUser, setUser} = useContext(AuthContext)
+  const handelSubmit = (e) =>{
+    e.preventDefault()
+
+    const from = new FormData(e.target)
+    // const name = from.get("name")
+    const email = from.get("email")
+    // const photo = from.get("photo")
+    const password = from.get("password")
+    // console.log( {name, email, password, photo})
+    createUser(email, password)
+    .then(res=>{
+      const user = res.user
+      setUser(user)
+      console.log(user)
+    })
+    .cetch(error=>{
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode,errorMessage.messages)
+    })
+    
+  }
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen flex justify-center items-center">
@@ -22,11 +46,12 @@ const Register = () => {
                 Register Your Account
               </h2>
 
-              <fieldset className="fieldset space-y-4">
+              <form onSubmit={handelSubmit} className="fieldset space-y-4">
                 {/* Name */}
                 <div>
                   <label className="label font-medium">Full Name</label>
                   <input
+                  name="name"
                     type="text"
                     className="input input-bordered w-full"
                     placeholder="Enter your name"
@@ -37,6 +62,7 @@ const Register = () => {
                 <div>
                   <label className="label font-medium">Photo URL</label>
                   <input
+                  name="photo"
                     type="text"
                     className="input input-bordered w-full"
                     placeholder="Enter photo URL"
@@ -47,6 +73,7 @@ const Register = () => {
                 <div>
                   <label className="label font-medium">Email</label>
                   <input
+                  name="email"
                     type="email"
                     className="input input-bordered w-full"
                     placeholder="Enter your email"
@@ -57,6 +84,7 @@ const Register = () => {
                 <div>
                   <label className="label font-medium">Password</label>
                   <input
+                  name="password"
                     type="password"
                     className="input input-bordered w-full"
                     placeholder="Enter your password"
@@ -67,7 +95,7 @@ const Register = () => {
                 <button className="btn btn-neutral w-full">
                   Register
                 </button>
-              </fieldset>
+              </form>
 
               {/* Divider */}
               <div className="divider">OR</div>
