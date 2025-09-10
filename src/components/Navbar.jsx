@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, Links } from 'react-router-dom';
 import proFileLogo from '../assets/user.png'
+import { AuthContext } from '../Provider/AuthProvider';
 const Navbar = () => {
+    const {user} = useContext(AuthContext)
     return (
         <div className='flex justify-between'>
             
-            <div></div>
+            <div className='font-semibold'>{user.name}</div>
             <div className='nav space-x-4 items-center'>
                 <Link to={'/home'}>Home</Link>
                 <Link to={'/career'}>Career</Link>
