@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
+  const {loginUser, setUser} = useContext(AuthContext)
+  
+
+  const handelLogin=(e)=>{
+    e.preventDefault()
+    const form = new FormData(e.target)
+    const email = form.get("email")
+    const password = form.get("password")
+    // console.log({email, password})
+    loginUser(email, password)
+    .then(res=>{
+      const user = res.user
+      setUser(user)
+    })
+    .catch(err=>{
+      const er = err.messages
+      console.log(er)
+    })
+  }
   return (
     <div className="hero bg-base-200 min-h-screen flex justify-center items-center">
       <div className="hero-content flex-col lg:flex-row-reverse w-full">
@@ -20,11 +40,12 @@ const Login = () => {
           <div className="card-body">
             <h2 className="text-2xl font-semibold text-center mb-4">Login Your Account</h2>
             
-            <fieldset className="fieldset space-y-4">
+            <form onSubmit={handelLogin} className="fieldset space-y-4">
               {/* Email */}
               <div>
                 <label className="label font-medium">Email</label>
                 <input 
+                name="email"
                   type="email" 
                   className="input input-bordered w-full" 
                   placeholder="Enter your email" 
@@ -35,6 +56,7 @@ const Login = () => {
               <div>
                 <label className="label font-medium">Password</label>
                 <input 
+                name="password"
                   type="password" 
                   className="input input-bordered w-full" 
                   placeholder="Enter your password" 
@@ -48,7 +70,7 @@ const Login = () => {
 
               {/* Button */}
               <button className="btn btn-neutral w-full">Login</button>
-            </fieldset>
+            </form>
 
             {/* Divider */}
             <div className="divider">OR</div>
