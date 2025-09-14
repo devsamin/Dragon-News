@@ -9,7 +9,7 @@ const Navbar = () => {
             
             <div className='font-semibold'>{user && user.email}</div>
             <div className='nav space-x-4 items-center'>
-                <Link to={'/home'}>Home</Link>
+                <Link to={'/'}>Home</Link>
                 <Link to={'/career'}>Career</Link>
                 <Link to={'/about'}>About</Link>
             </div>
