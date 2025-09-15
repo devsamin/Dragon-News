@@ -1,40 +1,50 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const [errorMessage, setErrormessage] = useState("")
-  const {createUser, setUser} = useContext(AuthContext)
-  const handelSubmit = (e) =>{
-    e.preventDefault()
+  const navigate = useNavigate()
+  const [errorMessage, setErrormessage] = useState("");
+  const { createUser, setUser, UpdateUesrProfile } = useContext(AuthContext);
+  const handelSubmit = (e) => {
+    e.preventDefault();
 
-    const from = new FormData(e.target)
+    const from = new FormData(e.target);
     // const name = from.get("name")
-    const email = from.get("email")
-    const name = from.get("name")
-    if(name.length < 5){
-      setErrormessage("Name Should Be More Then 5 Character!!!")
-      return
-    }
-    else{
-      setErrormessage("")
+    const email = from.get("email");
+    const name = from.get("name");
+    const photo = from.get("photo");
+    if (name.length < 5) {
+      setErrormessage("Name Should Be More Then 5 Character!!!");
+      return;
+    } else {
+      setErrormessage("");
     }
     // const photo = from.get("photo")
-    const password = from.get("password")
+    const password = from.get("password");
     // console.log( {name, email, password, photo})
     createUser(email, password)
-    .then(res=>{
-      setErrormessage("")
-      const user = res.user
-      setUser(user)
-      console.log(user)
-    })
-    .cetch(error=>{
-      const err = error.message;
-      setErrormessage(err)
-    })
-    
-  }
+      .then((res) => {
+        setErrormessage("");
+        const user = res.user;
+        UpdateUesrProfile({
+          displayName: name,
+          photoURL: photo,
+        })
+          .then(() => {
+            setUser(user);
+            navigate("/")
+            console.log(user);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((error) => {
+        const err = error.message;
+        setErrormessage(err);
+      });
+  };
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen flex justify-center items-center">
@@ -60,7 +70,7 @@ const Register = () => {
                 <div>
                   <label className="label font-medium">Full Name</label>
                   <input
-                  name="name"
+                    name="name"
                     type="text"
                     className="input input-bordered w-full"
                     placeholder="Enter your name"
@@ -72,7 +82,7 @@ const Register = () => {
                 <div>
                   <label className="label font-medium">Photo URL</label>
                   <input
-                  name="photo"
+                    name="photo"
                     type="text"
                     className="input input-bordered w-full"
                     placeholder="Enter photo URL"
@@ -84,7 +94,7 @@ const Register = () => {
                 <div>
                   <label className="label font-medium">Email</label>
                   <input
-                  name="email"
+                    name="email"
                     type="email"
                     className="input input-bordered w-full"
                     placeholder="Enter your email"
@@ -96,7 +106,7 @@ const Register = () => {
                 <div>
                   <label className="label font-medium">Password</label>
                   <input
-                  name="password"
+                    name="password"
                     type="password"
                     className="input input-bordered w-full"
                     placeholder="Enter your password"
@@ -105,9 +115,7 @@ const Register = () => {
                 </div>
 
                 {/* Button */}
-                <button className="btn btn-neutral w-full">
-                  Register
-                </button>
+                <button className="btn btn-neutral w-full">Register</button>
               </form>
               {errorMessage && <p className="text-red-600">{errorMessage}</p>}
 
@@ -117,7 +125,12 @@ const Register = () => {
               {/* Login link */}
               <p className="text-center text-sm">
                 Already have an account?{" "}
-                <Link to={'/auth/login'} className="link link-primary text-red-600">Login</Link>
+                <Link
+                  to={"/auth/login"}
+                  className="link link-primary text-red-600"
+                >
+                  Login
+                </Link>
               </p>
             </div>
           </div>
