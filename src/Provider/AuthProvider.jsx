@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth"; // ✅ import করতে হবে
+import { createContext, useEffect, useState } from "react";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth"; 
 import app from "../firebase.config";
 
 export const AuthContext = createContext();
@@ -8,6 +8,7 @@ const auth = getAuth(app);
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setloading] = useState(true)
+    
     console.log(user)
 
     const createUser = (email, password) => {

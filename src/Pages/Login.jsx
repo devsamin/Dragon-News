@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
+  const [errorMessage, setErrormessage] = useState("")
   const {loginUser, setUser} = useContext(AuthContext)
-  
+  const location = useLocation()
+  const navigate = useNavigate()
+  console.log(location)
+  // console.log()
 
   const handelLogin=(e)=>{
     e.preventDefault()
@@ -14,12 +18,14 @@ const Login = () => {
     // console.log({email, password})
     loginUser(email, password)
     .then(res=>{
+      setErrormessage("")
       const user = res.user
       setUser(user)
+      navigate(location.state)
     })
     .catch(err=>{
-      const er = err.messages
-      console.log(er)
+      const er = err.message
+      setErrormessage(er)
     })
   }
   return (
@@ -49,6 +55,7 @@ const Login = () => {
                   type="email" 
                   className="input input-bordered w-full" 
                   placeholder="Enter your email" 
+                  required
                 />
               </div>
 
@@ -60,6 +67,7 @@ const Login = () => {
                   type="password" 
                   className="input input-bordered w-full" 
                   placeholder="Enter your password" 
+                  required
                 />
               </div>
 
@@ -71,6 +79,7 @@ const Login = () => {
               {/* Button */}
               <button className="btn btn-neutral w-full">Login</button>
             </form>
+            {errorMessage && <p className="text-red-600">{errorMessage}</p>}
 
             {/* Divider */}
             <div className="divider">OR</div>

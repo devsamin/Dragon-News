@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
+  const [errorMessage, setErrormessage] = useState("")
   const {createUser, setUser} = useContext(AuthContext)
   const handelSubmit = (e) =>{
     e.preventDefault()
@@ -10,19 +11,27 @@ const Register = () => {
     const from = new FormData(e.target)
     // const name = from.get("name")
     const email = from.get("email")
+    const name = from.get("name")
+    if(name.length < 5){
+      setErrormessage("Name Should Be More Then 5 Character!!!")
+      return
+    }
+    else{
+      setErrormessage("")
+    }
     // const photo = from.get("photo")
     const password = from.get("password")
     // console.log( {name, email, password, photo})
     createUser(email, password)
     .then(res=>{
+      setErrormessage("")
       const user = res.user
       setUser(user)
       console.log(user)
     })
     .cetch(error=>{
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode,errorMessage.messages)
+      const err = error.message;
+      setErrormessage(err)
     })
     
   }
@@ -55,6 +64,7 @@ const Register = () => {
                     type="text"
                     className="input input-bordered w-full"
                     placeholder="Enter your name"
+                    required
                   />
                 </div>
 
@@ -66,6 +76,7 @@ const Register = () => {
                     type="text"
                     className="input input-bordered w-full"
                     placeholder="Enter photo URL"
+                    required
                   />
                 </div>
 
@@ -77,6 +88,7 @@ const Register = () => {
                     type="email"
                     className="input input-bordered w-full"
                     placeholder="Enter your email"
+                    required
                   />
                 </div>
 
@@ -88,6 +100,7 @@ const Register = () => {
                     type="password"
                     className="input input-bordered w-full"
                     placeholder="Enter your password"
+                    required
                   />
                 </div>
 
@@ -96,6 +109,7 @@ const Register = () => {
                   Register
                 </button>
               </form>
+              {errorMessage && <p className="text-red-600">{errorMessage}</p>}
 
               {/* Divider */}
               <div className="divider">OR</div>
