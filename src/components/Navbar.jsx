@@ -6,7 +6,7 @@ const Navbar = () => {
     const {user, logoutUser} = useContext(AuthContext)
     return (
         <div className='flex justify-between'>
-            
+            {/* <h2>{import.meta.env.VITE_NAME}</h2> */}
             <div className='font-semibold'>{user && user.email}</div>
             <div className='nav space-x-4 items-center'>
                 <Link to={'/'}>Home</Link>

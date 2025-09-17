@@ -5,9 +5,12 @@ import Navbar from '../components/Navbar';
 import LeftNav from '../components/Layout-components/LeftNav';
 import RightNav from '../components/Layout-components/RightNav';
 import CategoryNews from '../Pages/CategoryNews';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigation } from 'react-router-dom';
+import Loding from '../Pages/Loding';
 
 const HomeLayout = () => {
+    const {state} = useNavigation()
+    console.log(state)
     return (
         <div >
             <header>
@@ -24,7 +27,7 @@ const HomeLayout = () => {
                     <LeftNav></LeftNav>
                 </aside>
                 <section className='col-span-6'>
-                    <Outlet />
+                   {state =="loading" ? <Loding></Loding> : <Outlet />} 
                 </section>
                 <aside className='col-span-3'>
                     <RightNav></RightNav>
