@@ -10,7 +10,7 @@ import Loding from '../Pages/Loding';
 
 const HomeLayout = () => {
     const {state} = useNavigation()
-    console.log(state)
+    // console.log(state)
     return (
         <div >
             <header>

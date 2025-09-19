@@ -4,7 +4,7 @@ import { Link, useLoaderData } from "react-router-dom";
 
 const NewsDetails = () => {
   const data = useLoaderData();
-  console.log(data.data[0]);
+  // console.log(data.data[0]);
   const news = data.data[0];
   return (
     <div>

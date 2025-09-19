@@ -34,10 +34,10 @@ const Register = () => {
           .then(() => {
             setUser(user);
             navigate("/")
-            console.log(user);
+            // console.log(user);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       })
       .catch((error) => {
